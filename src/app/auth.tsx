@@ -64,7 +64,7 @@ export default function AuthScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.panel}>
-        <Text style={styles.title}>TingeSpaceShooter</Text>
+        <Text style={styles.title}>TingeBlockShooter</Text>
         <Text style={styles.subtitle}>{mode === 'signin' ? 'Sign in' : 'Create account'}</Text>
 
         {mode === 'signup' && (
