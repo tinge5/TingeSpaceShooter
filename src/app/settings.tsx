@@ -41,7 +41,7 @@ export default function SettingsScreen() {
           placeholderTextColor="#8AA0B7"
         />
 
-        <Text style={styles.label}>Spaceship color</Text>
+        <Text style={styles.label}>Blockship color</Text>
         <View style={styles.colorRow}>
           {shipColors.map((color) => (
             <Pressable

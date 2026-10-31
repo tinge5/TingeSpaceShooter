@@ -15,7 +15,7 @@ export default function SplashScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>WELCOME TO TINGE SPACE SHOOTER</Text>
+      <Text style={styles.title}>WELCOME TO TINGE BLOCK SHOOTER</Text>
       <Pressable onPress={() => router.replace('/auth')} style={styles.button}>
         <Text style={[styles.buttonText, isFlashing && styles.flashText]}>PRESS PLAY</Text>
       </Pressable>
