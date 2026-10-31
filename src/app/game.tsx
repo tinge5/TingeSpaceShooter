@@ -124,7 +124,7 @@ export default function GameScreen() {
     gameOverRef.current = isGameOver;
   }, [isGameOver]);
 
-  const theme = useMemo(() => backgroundThemes[Math.floor((level - 1) / 5) % backgroundThemes.length], [level]);
+  const theme = useMemo(() => backgroundThemes[Math.floor((level - 1) / 3) % backgroundThemes.length], [level]);
 
   const fireBullet = useCallback(() => {
     if (gameOverRef.current) {
