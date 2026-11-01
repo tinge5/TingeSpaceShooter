@@ -357,7 +357,7 @@ export default function GameScreen() {
         <Text style={styles.hudText}>LIVES {lives}</Text>
       </View>
 
-      <View style={styles.gameArea}>
+      <View style={[styles.gameArea, { backgroundColor: theme.sky, borderColor: theme.glow, shadowColor: theme.glow, shadowOpacity: 0.35, shadowRadius: 14 }]}>
         {stars.map((star) => (
           <View
             key={star.id}
@@ -519,8 +519,6 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     overflow: 'hidden',
     borderWidth: 2,
-    borderColor: '#294972',
-    backgroundColor: 'rgba(3, 10, 24, 0.75)',
     position: 'relative',
   },
   star: {
