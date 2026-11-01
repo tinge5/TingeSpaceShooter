@@ -9,11 +9,41 @@ const PLAYER_HEIGHT = 30;
 
 const shipPalette = ['#FF9F43', '#6EE7FF', '#A78BFA', '#F87171', '#7EF29A', '#FDE68A'];
 const backgroundThemes = [
-  { sky: '#020817', glow: '#1d4ed8', stars: ['#F5F8FF', '#7dd3fc', '#fbbf24'] },
-  { sky: '#090313', glow: '#a855f7', stars: ['#f9a8d4', '#e9d5ff', '#fef3c7'] },
-  { sky: '#02131d', glow: '#10b981', stars: ['#ecfeff', '#a7f3d0', '#fef08a'] },
-  { sky: '#140b2c', glow: '#f43f5e', stars: ['#f5d0fe', '#f8fafc', '#fbbf24'] },
-  { sky: '#171717', glow: '#f97316', stars: ['#fef3c7', '#fde68a', '#f5f5f5'] },
+  {
+    sky: '#020817',
+    glow: '#1d4ed8',
+    stars: ['#F5F8FF', '#7dd3fc', '#fbbf24'],
+    nebula: ['rgba(59,130,246,0.28)', 'rgba(147,197,253,0.18)', 'rgba(96,165,250,0.14)'],
+    planet: { color: '#fbbf24', size: 92, left: '76%', top: '14%', opacity: 0.82, ring: 'rgba(255, 210, 120, 0.5)' },
+  },
+  {
+    sky: '#090313',
+    glow: '#a855f7',
+    stars: ['#f9a8d4', '#e9d5ff', '#fef3c7'],
+    nebula: ['rgba(168,85,247,0.28)', 'rgba(236,72,153,0.18)', 'rgba(217,70,239,0.12)'],
+    planet: { color: '#c084fc', size: 110, left: '68%', top: '18%', opacity: 0.8, ring: 'rgba(216, 180, 254, 0.45)' },
+  },
+  {
+    sky: '#02131d',
+    glow: '#10b981',
+    stars: ['#ecfeff', '#a7f3d0', '#fef08a'],
+    nebula: ['rgba(16,185,129,0.22)', 'rgba(34,197,94,0.15)', 'rgba(56,189,248,0.12)'],
+    planet: { color: '#34d399', size: 96, left: '72%', top: '16%', opacity: 0.76, ring: 'rgba(167, 243, 208, 0.4)' },
+  },
+  {
+    sky: '#140b2c',
+    glow: '#f43f5e',
+    stars: ['#f5d0fe', '#f8fafc', '#fbbf24'],
+    nebula: ['rgba(244,63,94,0.24)', 'rgba(192,132,252,0.18)', 'rgba(251,146,60,0.14)'],
+    planet: { color: '#fb7185', size: 104, left: '72%', top: '16%', opacity: 0.8, ring: 'rgba(253, 186, 116, 0.38)' },
+  },
+  {
+    sky: '#171717',
+    glow: '#f97316',
+    stars: ['#fef3c7', '#fde68a', '#f5f5f5'],
+    nebula: ['rgba(249,115,22,0.24)', 'rgba(245,158,11,0.16)', 'rgba(255,255,255,0.12)'],
+    planet: { color: '#fbbf24', size: 100, left: '74%', top: '18%', opacity: 0.85, ring: 'rgba(253, 224, 71, 0.42)' },
+  },
 ];
 
 type Bullet = {
@@ -358,6 +388,47 @@ export default function GameScreen() {
       </View>
 
       <View style={[styles.gameArea, { backgroundColor: theme.sky, borderColor: theme.glow, shadowColor: theme.glow, shadowOpacity: 0.35, shadowRadius: 14 }]}>
+        <View pointerEvents="none" style={[StyleSheet.absoluteFill]}>
+          {theme.nebula.map((nebula, index) => (
+            <View
+              key={`nebula-${index}`}
+              style={[
+                styles.nebula,
+                {
+                  backgroundColor: nebula,
+                  width: index === 0 ? '62%' : index === 1 ? '50%' : '44%',
+                  height: index === 0 ? '42%' : index === 1 ? '34%' : '26%',
+                  left: index === 0 ? '8%' : index === 1 ? '46%' : '58%',
+                  top: index === 0 ? '18%' : index === 1 ? '38%' : '62%',
+                },
+              ]}
+            />
+          ))}
+
+          <View
+            style={[
+              styles.planet,
+              {
+                width: theme.planet.size,
+                height: theme.planet.size,
+                left: theme.planet.left,
+                top: theme.planet.top,
+                backgroundColor: theme.planet.color,
+                opacity: theme.planet.opacity,
+              },
+            ]}
+          >
+            <View
+              style={[
+                styles.planetRing,
+                {
+                  borderColor: theme.planet.ring,
+                },
+              ]}
+            />
+          </View>
+        </View>
+
         {stars.map((star) => (
           <View
             key={star.id}
@@ -525,6 +596,29 @@ const styles = StyleSheet.create({
     position: 'absolute',
     borderRadius: 999,
     opacity: 0.9,
+  },
+  nebula: {
+    position: 'absolute',
+    borderRadius: 999,
+    opacity: 0.9,
+    transform: [{ scale: 1.1 }],
+  },
+  planet: {
+    position: 'absolute',
+    borderRadius: 999,
+    shadowOpacity: 0.5,
+    shadowRadius: 22,
+    shadowColor: '#ffffff',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  planetRing: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 999,
+    borderWidth: 2,
+    borderStyle: 'solid',
+    opacity: 0.7,
   },
   overlay: {
     position: 'absolute',
