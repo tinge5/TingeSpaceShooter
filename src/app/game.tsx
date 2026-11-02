@@ -348,14 +348,20 @@ export default function GameScreen() {
 
       setExplosions((current) => current.map((entry) => ({ ...entry, ttl: entry.ttl - 1 })).filter((entry) => entry.ttl > 0));
 
-      if (survivingEnemies.some((enemy) => enemy.y + enemy.size >= GAME_HEIGHT - 40)) {
-        const nextLives = Math.max(0, livesRef.current - 1);
+      const escapedEnemies = survivingEnemies.filter((enemy) => enemy.y + enemy.size >= GAME_HEIGHT - 40);
+      if (escapedEnemies.length > 0) {
+        const lostLives = escapedEnemies.length;
+        const nextLives = Math.max(0, livesRef.current - lostLives);
         livesRef.current = nextLives;
         setLives(nextLives);
-        setShipDamage((current) => Math.min(4, current + 1));
-        shipDamageRef.current = Math.min(4, shipDamageRef.current + 1);
-        enemiesRef.current = createWave(levelRef.current, GAME_WIDTH);
+        setShipDamage((current) => Math.min(4, current + lostLives));
+        shipDamageRef.current = Math.min(4, shipDamageRef.current + lostLives);
+
+        const enemiesThatEscaped = new Set(escapedEnemies.map((enemy) => enemy.id));
+        const remainingEnemies = survivingEnemies.filter((enemy) => !enemiesThatEscaped.has(enemy.id));
+        enemiesRef.current = remainingEnemies.length > 0 ? remainingEnemies : createWave(levelRef.current, GAME_WIDTH);
         setEnemies(enemiesRef.current);
+
         if (nextLives <= 0) {
           setIsGameOver(true);
           gameOverRef.current = true;
